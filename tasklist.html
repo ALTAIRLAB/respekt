@@ -34,7 +34,10 @@
       };
     function getUser() {
       var user = firebase.auth().currentUser;
-      if (user) clearInterval(intervalID)
+      if (user) {
+          clearInterval(intervalID);
+          getTaskList();
+        }
     }
     
     var intervalID = setInterval(, 1000)
