@@ -1,6 +1,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="img/favicon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
 <link rel="stylesheet" type="text/css" href="css/onsen-css-components.min.css">
 <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
@@ -31,9 +32,15 @@
             else
               $("#addTaskDialog").css("visibility", "hidden");
       };
-    var user = firebase.auth().currentUser;
+    function getUser() {
+      var user = firebase.auth().currentUser;
+      if (user) clearInterval(intervalID)
+    }
+    
+    var intervalID = setInterval(, 1000)
+   
 
-    if (!user) {
+    function getTaskList() {
       db.on('value', snap => 
       {
         var cList = $('#taskList')
@@ -76,9 +83,7 @@
         });
       });
     }
-    else {
-      $('.toolbar-button--quiet').css("visibility", "hidden");
-    }
+      
 
     //writeNewTask("Съесть мороженное в мороз", "Температура должна быть ниже -20 градусов");
     function addTaskOnClick() {
