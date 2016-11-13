@@ -43,8 +43,7 @@
         $(".error").css("visibility", "visible");
         
       });
-      var user = firebase.auth().currentUser;
-      if (user) {
+      if (firebase.auth().currentUser) {
         window.location = "tasklist.html";
       } else {
 
