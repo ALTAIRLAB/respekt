@@ -1,14 +1,12 @@
+<html>-
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"> 
 <link rel="stylesheet" type="text/css" href="css/onsen-css-components.min.css">
 <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
 <script type="text/javascript" src = "js/firebase_connect.js"></script>
-
-<script
-  src="http://code.jquery.com/jquery-3.1.1.slim.min.js"
-  integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
-  crossorigin="anonymous"></script>
+<script type="text/javascript" src = "js/jquery-3.1.1.min.js"></script>
+</head>
 <body>
 <div class="navigation-bar navigation-bar--noshadow" style="position: fixed;">
   <div class="navigation-bar__left">
@@ -35,7 +33,7 @@
       };
     var user = firebase.auth().currentUser;
 
-    if (!user) {
+    if (user) {
       db.on('value', snap => 
       {
         var cList = $('#taskList')
@@ -123,3 +121,4 @@
   </div>
 </div>
 </body>
+</html>
