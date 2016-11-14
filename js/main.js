@@ -1,3 +1,5 @@
+var intervalID;
+
 function register(email, password) {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
         var errorCode = error.code;
@@ -46,7 +48,7 @@ function getUser() {
 }
 
 function waitForUser() {
-  var intervalID = setInterval(getUser, 1000);
+  intervalID = setInterval(getUser, 1000);
 }
 
 function getTaskList() {
