@@ -41,6 +41,7 @@ function getUser() {
     user = firebase.auth().currentUser;
     if (user) {
         clearInterval(intervalID);
+        console.log("OK! Loading task list");
         getTaskList();
     } else {
         console.log("waiting for login...");
