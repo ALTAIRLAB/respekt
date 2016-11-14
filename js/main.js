@@ -5,6 +5,12 @@ function register(email, password) {
         $(".error").text(errorMessage);
         $(".error").css("visibility", "visible");
     });
+    if (firebase.auth().currentUser) {
+        window.location = "tasklist.html";
+    } else {
+        // error here
+    }
+
 }
 
 function logIn(email, password) {
@@ -18,7 +24,7 @@ function logIn(email, password) {
     if (firebase.auth().currentUser) {
         window.location = "tasklist.html";
     } else {
-
+        // error here
     }
 }
 
