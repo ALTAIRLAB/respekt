@@ -45,7 +45,9 @@ function getUser() {
     }
 }
 
-var intervalID = setInterval(getUser, 1000);
+function waitForUser() {
+  var intervalID = setInterval(getUser, 1000);
+}
 
 function getTaskList() {
     db.on('value', snap => {
