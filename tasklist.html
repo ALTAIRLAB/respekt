@@ -1,134 +1,46 @@
 <html>
+
 <head>
-<meta charset="UTF-8">
-<link rel="icon" type="image/png" href="img/favicon.png" />
-<meta name="viewport" content="width=device-width, initial-scale=1"> 
-<link rel="stylesheet" type="text/css" href="css/onsen-css-components.min.css">
-<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
-<script type="text/javascript" src = "js/firebase_connect.js"></script>
-<script type="text/javascript" src = "js/jquery-3.1.1.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/onsen-css-components.min.css">
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+    <script src="js/main.js"></script>
+    <script type="text/javascript" src="js/firebase_connect.js"></script>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 </head>
+
 <body>
-<div class="navigation-bar navigation-bar--noshadow" style="position: fixed;">
-  <div class="navigation-bar__left">
-    <span class="toolbar-button--quiet">
+    <div class="navigation-bar navigation-bar--noshadow" style="position: fixed;">
+        <div class="navigation-bar__left">
+            <span class="toolbar-button--quiet">
       <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
     </span>
-  </div>
-  <div class="navigation-bar__center">
-   	Таски
-  </div>
-  <div class="navigation-bar__right">
-    <span class="toolbar-button--quiet" onclick="toggleVisibility();">Добавить</span>
-  </div>
-</div>
-
-<ul class="list list--material" id="taskList" style="margin-top: 50px;"></ul>
-
-<script type="text/javascript">
-    function toggleVisibility(){
-            if ($("#addTaskDialog").css("visibility") == "hidden")
-              $("#addTaskDialog").css("visibility", "visible");
-            else
-              $("#addTaskDialog").css("visibility", "hidden");
-      };
-    function getUser() {
-      user = firebase.auth().currentUser;
-      if (user) {
-          clearInterval(intervalID);
-          getTaskList();
-        }
-        else {
-          console.log("waiting for login...");
-        }
-    }
-    
-    var intervalID = setInterval(getUser, 1000);
-   
-    function getTaskList() {
-      db.on('value', snap => 
-      {
-        var cList = $('#taskList')
-        cList.children().remove();
-        $.each(snap.val().tasks, function(i)
-        {
-            var li = $('<li/>')
-                .addClass('list__item list__item--material')
-                .appendTo(cList);
-
-
-
-            var divListMain = $('<div/>')
-                .addClass('list__item__center list__item--material__center')
-                .appendTo(li);
-            var divListTitle = $('<div/>')
-                .addClass('list__item__title list__item--material__title')
-                .text(snap.val().tasks[i].name)
-                .appendTo(divListMain);
-            var divListDesc = $('<div/>')
-                .addClass('list__item__subtitle list__item--material__subtitle')
-                .text(snap.val().tasks[i].description)
-                .appendTo(divListMain);
-
-            var divRating = $('<div/>')
-                .addClass('list__item__right list__item--material__right')
-                .appendTo(li);
-
-             var spanRating = $('<span/>')
-                .css("font-size", "10pt")
-                .css("padding", "0pt 5pt")
-                .text(snap.val().tasks[i].likes - snap.val().tasks[i].dislikes)
-                .appendTo(divRating);
-
-            var img = $('<img/>')
-                .attr("src" , "img/like.png")
-                .appendTo(divRating); 
-
-           
-        });
-      });
-    }
-      
-
-    //writeNewTask("Съесть мороженное в мороз", "Температура должна быть ниже -20 градусов");
-    function addTaskOnClick() {
-      writeNewTask($('#newTaskName').val(), $('#newTaskDesc').val());
-      toggleVisibility();
-      $('#newTaskName').val('');
-      $('#newTaskDesc').val('');
-    }
-
-    function writeNewTask(name, desc) {
-      // A post entry.
-      var postData = {
-        name: name,
-        description: desc,
-        likes: 0,
-        dislikes: 0
-      };
-
-      var newTaskKey = firebase.database().ref().child('tasks').push().key;
-      var updates = {};
-      updates['/tasks/' + newTaskKey] = postData;
-      return firebase.database().ref().update(updates);
-    }
-
-</script>
-
-<div class="alert-dialog alert-dialog--material" id="addTaskDialog" style="visibility: hidden;">
-  <div class="alert-dialog-container alert-dialog-container--material">
-    <div class="alert-dialog-title alert-dialog-title--material">
-	    <input type="text" class="text-input" id="newTaskName" placeholder="Название">
-		<br>
-	    </div>
-    <div class="alert-dialog-content alert-dialog-content--material">
-      	<textarea class="textarea" rows="3" id="newTaskDesc" placeholder="Условие выполнения"></textarea>
+        </div>
+        <div class="navigation-bar__center">
+            Таски
+        </div>
+        <div class="navigation-bar__right">
+            <span class="toolbar-button--quiet" onclick="toggleVisibility();">Добавить</span>
+        </div>
     </div>
-    <div class="alert-dialog-footer alert-dialog-footer--material">
-      <button class="alert-dialog-button alert-dialog-button--material" onclick="addTaskOnClick()">OK</button>
-      <button class="alert-dialog-button alert-dialog-button--material" onclick="toggleVisibility();">CANCEL</button>
+    <ul class="list list--material" id="taskList" style="margin-top: 50px;"></ul>
+    <div class="alert-dialog alert-dialog--material" id="addTaskDialog" style="visibility: hidden;">
+        <div class="alert-dialog-container alert-dialog-container--material">
+            <div class="alert-dialog-title alert-dialog-title--material">
+                <input type="text" class="text-input" id="newTaskName" placeholder="Название">
+                <br>
+            </div>
+            <div class="alert-dialog-content alert-dialog-content--material">
+                <textarea class="textarea" rows="3" id="newTaskDesc" placeholder="Условие выполнения"></textarea>
+            </div>
+            <div class="alert-dialog-footer alert-dialog-footer--material">
+                <button class="alert-dialog-button alert-dialog-button--material" onclick="addTaskOnClick()">OK</button>
+                <button class="alert-dialog-button alert-dialog-button--material" onclick="toggleVisibility();">CANCEL</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </body>
+
 </html>
