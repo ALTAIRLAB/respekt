@@ -103,11 +103,14 @@ function addTaskOnClick() {
 
 function writeNewTask(name, desc) {
     // A post entry.
+    var utc = new Date().toJSON().slice(0,10);
     var postData = {
         name: name,
         description: desc,
         likes: 0,
-        dislikes: 0
+        dislikes: 0,
+        author: firebase.auth().currentUser.email,
+        date: utc
     };
 
     var newTaskKey = firebase.database().ref().child('tasks').push().key;
