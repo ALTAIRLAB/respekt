@@ -20,6 +20,8 @@ function signInGoogle() {
     firebase.auth().signInWithPopup(provider).then(function(result) {
       var token = result.credential.accessToken;
       var user = result.user;
+      window.location = "tasklist.html";
+
     }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -27,7 +29,6 @@ function signInGoogle() {
       var credential = error.credential;
       $(".error").text(errorMessage);
       $(".error").css("visibility", "visible");
-
     });
 }
 
