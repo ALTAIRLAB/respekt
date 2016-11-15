@@ -65,6 +65,7 @@ function getTaskList() {
 
             var divListMain = $('<div/>')
                 .addClass('list__item__center list__item--material__center')
+                .on('click', function () {window.location = "task.html?name=" + i;})
                 .appendTo(li);
             var divListTitle = $('<div/>')
                 .addClass('list__item__title list__item--material__title')

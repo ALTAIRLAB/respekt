@@ -2,7 +2,7 @@
 
 <head>
     <link rel="icon" type="image/png" href="img/favicon.png" />
-    <link rel="stylesheet" type="text/css" href="css/Task.css">
+    <!--link rel="stylesheet" type="text/css" href="css/Task.css"-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/onsen-css-components.min.css">
@@ -33,6 +33,15 @@
             </button>
         </label>
     </div>
+    <script type="text/javascript">
+      var qstring = window.location.href.slice(window.location.href.indexOf('?') + 1).split('=')[1];
+      firebase.database().ref('/tasks/' + qstring).once('value').then(function(snapshot) {
+        $('#taskName').text(snapshot.val().name);
+        $('#taskDesc').text(snapshot.val().description);
+      });
+    </script>
+    <h3 id="taskName"></h3>
+    <h4 id="taskDesc"></h4>
     <button class="button--large--quiet" style="margin-top: 50px;">Добавить</button>
 </body>
 
