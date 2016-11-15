@@ -15,6 +15,22 @@ function register(email, password) {
 
 }
 
+function signInGoogle() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      var token = result.credential.accessToken;
+      var user = result.user;
+    }).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      var email = error.email;
+      var credential = error.credential;
+      $(".error").text(errorMessage);
+      $(".error").css("visibility", "visible");
+
+    });
+}
+
 function logIn(email, password) {
     var user = firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         var errorCode = error.code;
@@ -111,7 +127,8 @@ function writeNewTask(name, desc) {
         likes: 0,
         dislikes: 0,
         author: firebase.auth().currentUser.email,
-        date: utc
+        date: utc,
+        parts: 1
     };
 
     var newTaskKey = firebase.database().ref().child('tasks').push().key;
