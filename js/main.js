@@ -186,6 +186,9 @@ function handleFileSelect()  {
         var qstring = window.location.href.slice(window.location.href.indexOf('?') + 1).split('=')[1];
         updates['/tasks/' + qstring + '/link'] = 'images/' + file.name;
         firebase.database().ref().update(updates);
+        toggleVisibility();
+        $('#newTaskName').val('');
+        $('#newTaskDesc').val('');
         var downloadURL = uploadTask.snapshot.downloadURL;
       });      
     }
