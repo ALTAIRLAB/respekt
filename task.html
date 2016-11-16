@@ -42,10 +42,10 @@
                 firebase.storage().ref().child(snapshot.val().link).getDownloadURL().then(function(url) {
                     $('#taskImage').attr('src', url);
                 }).catch(function(error) {
-                    // Handle any errors
+                
                 });
             };
-    }
+    });
     </script>
     <h3 id="taskName"></h3>
     <h4 id="taskDesc"></h4>
