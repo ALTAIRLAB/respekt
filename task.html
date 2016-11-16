@@ -38,10 +38,17 @@
       firebase.database().ref('/tasks/' + qstring).once('value').then(function(snapshot) {
         $('#taskName').text(snapshot.val().name);
         $('#taskDesc').text(snapshot.val().description);
+        
+        firebase.storage().ref().child(snapshot.val().link).getDownloadURL().then(function(url) {
+          $('#taskImage').attr('src', url);
+        }).catch(function(error) {
+          // Handle any errors
+        });
       });
     </script>
     <h3 id="taskName"></h3>
     <h4 id="taskDesc"></h4>
+    <img src="" id="taskImage" width="100%" />
     <button class="button--large--quiet" style="margin-top: 50px;" onclick="$('#addTaskDialog').css('visibility', 'visible');">Добавить</button>
     <div class="alert-dialog alert-dialog--material" id="addTaskDialog" style="visibility: hidden;">
       <div class="alert-dialog-container alert-dialog-container--material">

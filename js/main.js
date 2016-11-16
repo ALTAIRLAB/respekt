@@ -139,8 +139,7 @@ function writeNewTask(name, desc) {
 }
 
 
-function handleFileSelect()
-  {               
+function handleFileSelect()  {               
     if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
       alert('Загрузка не поддерживается вашим браузером');
       return;
@@ -157,7 +156,39 @@ function handleFileSelect()
       alert("Выберите файл прежде чем жать ОК");               
     }
     else {
-      file = input.files[0];
-      return file;
+      
+      var file = input.files[0];
+      var storageRef = firebase.storage().ref();
+      var uploadTask = storageRef.child('images/' + file.name).put(file);
+      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+        function(snapshot) {
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }
+        }, function(error) {
+        switch (error.code) {
+          case 'storage/unauthorized':
+            break;
+          case 'storage/canceled':
+            break;
+          case 'storage/unknown':
+            break;
+        }
+      }, function() {
+        var updates = {};
+        var qstring = window.location.href.slice(window.location.href.indexOf('?') + 1).split('=')[1];
+        updates['/tasks/' + qstring + '/link'] = 'images/' + file.name;
+        firebase.database().ref().update(updates);
+        var downloadURL = uploadTask.snapshot.downloadURL;
+      });      
     }
   }
+
+
