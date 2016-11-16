@@ -49,12 +49,12 @@
         <label class="file_upload">
             <span class="button">Выбрать</span>
             <mark>Файл не выбран</mark>
-            <input type="file" style="visibility: hidden;">
+            <input type="file" id="fileInput" accept="image/*,video/*"/>
         </label>
             <textarea class="textarea" rows="3" id="newTaskDesc" placeholder="Описание"></textarea>
         </div>
         <div class="alert-dialog-footer alert-dialog-footer--material">
-          <button class="alert-dialog-button alert-dialog-button--material" onclick="writeNewTask($('#newTaskName').val(), $('#newTaskDesc').val()); toggleVisibility();">OK</button>
+          <button class="alert-dialog-button alert-dialog-button--material" onclick="handleFileSelect();">OK</button>
           <button class="alert-dialog-button alert-dialog-button--material" onclick="toggleVisibility();">CANCEL</button>
         </div>
       </div>

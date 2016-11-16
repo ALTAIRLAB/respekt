@@ -137,3 +137,27 @@ function writeNewTask(name, desc) {
     updates['/tasks/' + newTaskKey] = postData;
     return firebase.database().ref().update(updates);
 }
+
+
+function handleFileSelect()
+  {               
+    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+      alert('Загрузка не поддерживается вашим браузером');
+      return;
+    }   
+
+    input = document.getElementById('fileInput');
+    if (!input) {
+      alert("Не найден файл");
+    }
+    else if (!input.files) {
+      alert("Этот браузер не поддерживает загрузку файлов");
+    }
+    else if (!input.files[0]) {
+      alert("Выберите файл прежде чем жать ОК");               
+    }
+    else {
+      file = input.files[0];
+      return file;
+    }
+  }
