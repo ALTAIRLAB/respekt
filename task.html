@@ -43,6 +43,22 @@
     <h3 id="taskName"></h3>
     <h4 id="taskDesc"></h4>
     <button class="button--large--quiet" style="margin-top: 50px;">Добавить</button>
+    <div class="alert-dialog alert-dialog--material" id="addTaskDialog" style="visibility: hidden;">
+      <div class="alert-dialog-container alert-dialog-container--material">
+        <div class="alert-dialog-content alert-dialog-content--material">
+        <label class="file_upload">
+            <span class="button">Выбрать</span>
+            <mark>Файл не выбран</mark>
+            <input type="file">
+        </label>
+            <textarea class="textarea" rows="3" id="newTaskDesc" placeholder="Описание"></textarea>
+        </div>
+        <div class="alert-dialog-footer alert-dialog-footer--material">
+          <button class="alert-dialog-button alert-dialog-button--material" onclick="writeNewTask($('#newTaskName').val(), $('#newTaskDesc').val()); toggleVisibility();">OK</button>
+          <button class="alert-dialog-button alert-dialog-button--material" onclick="toggleVisibility();">CANCEL</button>
+        </div>
+      </div>
+    </div>
 </body>
 
 </html>
