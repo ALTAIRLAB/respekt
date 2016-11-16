@@ -36,15 +36,16 @@
     <script type="text/javascript">
       var qstring = window.location.href.slice(window.location.href.indexOf('?') + 1).split('=')[1];
       firebase.database().ref('/tasks/' + qstring).once('value').then(function(snapshot) {
-        $('#taskName').text(snapshot.val().name);
-        $('#taskDesc').text(snapshot.val().description);
-        
-        firebase.storage().ref().child(snapshot.val().link).getDownloadURL().then(function(url) {
-          $('#taskImage').attr('src', url);
-        }).catch(function(error) {
-          // Handle any errors
+          $('#taskName').text(snapshot.val().name);
+          $('#taskDesc').text(snapshot.val().description);
+          if (snapshot.val().link) {
+          firebase.storage().ref().child(snapshot.val().link).getDownloadURL().then(function(url) {
+            $('#taskImage').attr('src', url);
+          }).catch(function(error) {
+            // Handle any errors
+          });
         });
-      });
+      }
     </script>
     <h3 id="taskName"></h3>
     <h4 id="taskDesc"></h4>
